@@ -177,7 +177,7 @@
         <div class="flex items-center justify-between gap-4 mb-12 flex-wrap">
           <h2 class="text-3xl md:text-4xl font-800">Portfolio</h2>
           <p class="text-xs md:text-sm text-[#666] font-mono uppercase tracking-wider">
-            Ajoutez vos liens YouTube / Vimeo / MP4 dans <span class="text-[#00FF88]">portfolioVideos</span>
+            Ajoutez vos fichiers MP4 locaux dans <span class="text-[#00FF88]">/videos</span> et mettez à jour <span class="text-[#00FF88]">portfolioVideos</span>
           </p>
         </div>
 
@@ -304,36 +304,36 @@
     <script>
       /**
        * Portfolio editable list:
-       * - type: 'youtube' | 'vimeo' | 'file' | 'empty'
-       * - src: URL (YouTube/Vimeo/file path)
+       * - type: 'local' (recommandé) | 'file' | 'youtube' | 'vimeo' | 'empty'
+       * - src: chemin relatif local (ex: 'videos/video1.mp4') ou URL
        */
       const portfolioVideos = [
         {
-          title: "Votre vidéo actuelle",
+          title: "UGC - Démo 1",
           category: "UGC",
-          description: "Remplacez src avec votre lien YouTube/Vimeo ou fichier local.",
-          type: "empty",
-          src: "",
+          description: "Remplacez ce fichier par votre meilleure vidéo UGC.",
+          type: "local",
+          src: "videos/video1.mp4",
         },
         {
-          title: "Emplacement #2",
-          category: "TV Spot",
-          description: "Ajoutez un deuxième exemple pour renforcer votre crédibilité.",
-          type: "empty",
-          src: "",
+          title: "Tutorial - Démo 2",
+          category: "Tutorial",
+          description: "Ajoutez un format pas-à-pas pour rassurer vos prospects.",
+          type: "local",
+          src: "videos/video2.mp4",
         },
         {
-          title: "Emplacement #3",
-          category: "Product Ads",
-          description: "Montrez les détails produit et la transformation visuelle.",
-          type: "empty",
-          src: "",
+          title: "Unboxing - Démo 3",
+          category: "Unboxing",
+          description: "Montrez le produit en conditions réelles.",
+          type: "local",
+          src: "videos/video3.mp4",
         },
-        { title: "Emplacement #4", category: "UGC", description: "Ajoutez une vidéo verticale performante.", type: "empty", src: "" },
-        { title: "Emplacement #5", category: "UGC", description: "Ajoutez une variation d’angle créatif.", type: "empty", src: "" },
-        { title: "Emplacement #6", category: "TV Spot", description: "Ajoutez un format premium plus cinématique.", type: "empty", src: "" },
-        { title: "Emplacement #7", category: "Product Ads", description: "Ajoutez un close-up produit orienté conversion.", type: "empty", src: "" },
-        { title: "Emplacement #8", category: "Wildcard", description: "Ajoutez votre meilleur test créatif du moment.", type: "empty", src: "" },
+        { title: "Hyper Motion - Démo 4", category: "Hyper Motion", description: "Version dynamique orientée performance ads.", type: "local", src: "videos/video4.mp4" },
+        { title: "Product Review - Démo 5", category: "Product Review", description: "Avis authentique face caméra.", type: "local", src: "videos/video5.mp4" },
+        { title: "TV Spot - Démo 6", category: "TV Spot", description: "Créatif narratif style publicité premium.", type: "local", src: "videos/video6.mp4" },
+        { title: "UGC Virtual Try On - Démo 7", category: "UGC Virtual Try On", description: "Essayage produit et bénéfices visibles.", type: "local", src: "videos/video7.mp4" },
+        { title: "Pro Virtual Try On - Démo 8", category: "Pro Virtual Try On", description: "Version avancée avec rendu plus cinématique.", type: "local", src: "videos/video8.mp4" },
       ];
 
       const carouselTrack = document.getElementById("carouselTrack");
@@ -384,8 +384,8 @@
             : `<div class="vid-placeholder aspect-video rounded-2xl flex items-center justify-center"><p class="text-xs text-[#666]">URL Vimeo invalide</p></div>`;
         }
 
-        if (video.type === "file") {
-          return `<div class="video-frame aspect-video rounded-2xl overflow-hidden"><video controls preload="metadata"><source src="${video.src}" />Votre navigateur ne supporte pas la lecture vidéo.</video></div>`;
+        if (video.type === "file" || video.type === "local") {
+          return `<div class="video-frame aspect-video rounded-2xl overflow-hidden"><video controls preload="metadata"><source src="${video.src}" type="video/mp4" />Votre navigateur ne supporte pas la lecture vidéo.</video></div>`;
         }
 
         return `<div class="vid-placeholder aspect-video rounded-2xl flex items-center justify-center"><p class="text-xs text-[#666]">Type non supporté</p></div>`;

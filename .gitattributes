@@ -1,0 +1,2 @@
+# Keep local video assets as binary files (no line-ending normalization)
+videos/*.mp4 binary
