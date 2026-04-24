@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr" class="h-full" style="scroll-behavior: smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibe Ads Studio — Video Ads Creator</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ["Outfit", "sans-serif"],
+              mono: ["Space Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes glowPulse { 0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.15); } 50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.3); } }
+      .fade-up { animation: fadeUp 0.8s ease forwards; opacity: 0; }
+      .fade-up-d1 { animation-delay: 0.1s; }
+      .fade-up-d2 { animation-delay: 0.25s; }
+      .fade-up-d3 { animation-delay: 0.4s; }
+      .fade-up-d4 { animation-delay: 0.55s; }
+      .glow-card { animation: glowPulse 3s ease-in-out infinite; }
+      .vid-placeholder { background: linear-gradient(135deg, #111 0%, #1a1a1a 50%, #111 100%); position: relative; overflow: hidden; }
+      .pricing-card { background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%); border: 1px solid #1f1f1f; transition: border-color 0.3s, transform 0.3s; }
+      .pricing-card:hover { border-color: #00ff88; transform: translateY(-4px); }
+      .recommended-card { border-color: #00ff88; }
+      .carousel-track { transition: transform 0.45s ease; }
+      .portfolio-slide { flex: 0 0 100%; }
+      @media (min-width: 768px) { .portfolio-slide { flex-basis: 50%; } }
+      @media (min-width: 1024px) { .portfolio-slide { flex-basis: 33.333333%; } }
+      .carousel-dot { width: 9px; height: 9px; border-radius: 999px; background: #2a2a2a; border: 1px solid #3a3a3a; transition: all 0.25s ease; }
+      .carousel-dot.active { width: 24px; background: #00ff88; border-color: #00ff88; }
+      .video-frame { background: #0a0a0a; border: 1px solid #1f1f1f; }
+    </style>
+  </head>
+  <body class="h-full bg-[#0D0D0D] text-white font-heading overflow-auto">
+    <div class="w-full min-h-full">
+      <nav class="w-full px-6 md:px-12 lg:px-20 py-6 flex items-center justify-between border-b border-[#1a1a1a]">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-[#00FF88] to-[#00cc6a] rounded-lg flex items-center justify-center"><span class="text-[#0D0D0D] font-900 text-sm">V</span></div>
+          <span class="font-bold text-lg tracking-tight">Vibe Ads Studio</span>
+        </div>
+        <a href="/cdn-cgi/l/email-protection#e99f808b8cc7888d9ac79a9d9c8d8086d8a98e84888085c78a8684" class="text-[10px] font-mono text-[#555] hover:text-[#00FF88] transition-colors tracking-widest uppercase">Contact</a>
+      </nav>
+
+      <section class="w-full flex flex-col items-center justify-center text-center px-6 py-32 md:py-44 relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#00FF88] opacity-[0.03] rounded-full blur-[120px] pointer-events-none"></div>
+        <p class="fade-up fade-up-d1 font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-6">Créateur de contenu vidéo</p>
+        <h1 class="fade-up fade-up-d2 text-5xl md:text-7xl lg:text-8xl font-900 tracking-tight leading-[0.95] max-w-4xl">Vidéos publicitaires qui convertissent</h1>
+        <p class="fade-up fade-up-d3 mt-6 text-lg md:text-xl text-[#888] font-light max-w-xl leading-relaxed">UGC • TV Spots • Product Ads<br /><span class="block text-sm text-[#666] mt-2">Optimisé pour TikTok & Meta Ads</span></p>
+        <a href="#portfolio" class="fade-up fade-up-d4 mt-10 inline-flex items-center gap-2 bg-[#00FF88] text-[#0D0D0D] font-bold text-sm tracking-wide px-8 py-4 rounded-full hover:scale-105 transition-transform"><span>Voir le Portfolio</span><i data-lucide="arrow-down" style="width: 16px; height: 16px"></i></a>
+      </section>
+
+      <section id="portfolio" class="w-full px-6 md:px-12 lg:px-20 py-20">
+        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-3">Réalisations</p>
+        <h2 class="text-3xl md:text-4xl font-800 mb-12">Portfolio</h2>
+        <div class="relative">
+          <div class="overflow-hidden rounded-2xl"><div id="carouselTrack" class="carousel-track flex"></div></div>
+          <div class="flex items-center justify-between mt-8">
+            <div class="flex items-center gap-3">
+              <button id="prevBtn" type="button" class="w-11 h-11 rounded-full border border-[#2b2b2b] hover:border-[#00FF88] flex items-center justify-center transition-colors opacity-40" disabled><i data-lucide="chevron-left" style="width: 18px; height: 18px"></i></button>
+              <button id="nextBtn" type="button" class="w-11 h-11 rounded-full border border-[#2b2b2b] hover:border-[#00FF88] flex items-center justify-center transition-colors"><i data-lucide="chevron-right" style="width: 18px; height: 18px"></i></button>
+            </div>
+            <div id="carouselDots" class="flex items-center gap-2"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="branding" class="w-full px-6 md:px-12 lg:px-20 py-20 border-t border-[#1a1a1a]">
+        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-3">Identité visuelle</p>
+        <h2 class="text-3xl md:text-4xl font-800 mb-4">Design & Brand Kit</h2>
+        <p class="text-[#888] text-sm max-w-2xl mb-10">Logo, affiches, menus, flyers… Je crée une identité cohérente adaptée à votre marque sous 48-72h.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="border border-dashed border-[#2a2a2a] rounded-xl p-4 text-sm text-[#aaa]">Logo & Identité</div>
+          <div class="border border-dashed border-[#2a2a2a] rounded-xl p-4 text-sm text-[#aaa]">Menus / Affiches</div>
+          <div class="border border-dashed border-[#2a2a2a] rounded-xl p-4 text-sm text-[#aaa]">Flyers / Cartes</div>
+          <div class="border border-dashed border-[#2a2a2a] rounded-xl p-4 text-sm text-[#aaa]">Templates Sociaux</div>
+        </div>
+      </section>
+
+      <section id="pricing" class="w-full px-6 md:px-12 lg:px-20 py-20 border-t border-[#1a1a1a]">
+        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-6">Tarifs de lancement</p>
+        <h2 class="text-3xl md:text-4xl font-800 mb-12">Nos Offres</h2>
+
+        <p class="font-mono text-[#555] text-xs tracking-[0.25em] uppercase mb-6">— Video Ads</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <div class="pricing-card rounded-2xl p-8 flex flex-col">
+            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Essai Solo</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">29€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <ul class="mt-6 space-y-2 text-sm text-[#888]"><li>1 vidéo UGC</li><li>Format 9:16 vertical</li><li>1 révision</li></ul>
+          </div>
+          <div class="pricing-card recommended-card glow-card rounded-2xl p-8 flex flex-col relative">
+            <span class="absolute -top-3 right-6 bg-[#00FF88] text-[#0D0D0D] text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Populaire</span>
+            <p class="font-mono text-xs text-[#00FF88] tracking-widest uppercase">Pack Trio</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">69€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <ul class="mt-6 space-y-2 text-sm text-[#888]"><li>3 vidéos UGC / Ads</li><li>3 angles de vente</li><li>Livraison express 48h</li></ul>
+          </div>
+          <div class="pricing-card rounded-2xl p-8 flex flex-col">
+            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Option Premium</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">+20€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <ul class="mt-6 space-y-2 text-sm text-[#888]"><li>Traitement TV Spot</li><li>Rendu cinématique</li><li>Effets avancés</li></ul>
+          </div>
+        </div>
+
+        <p class="font-mono text-[#555] text-xs tracking-[0.25em] uppercase mb-6">— Design & Brand Kit</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <div class="pricing-card rounded-2xl p-8 flex flex-col">
+            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Pack Visuels</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">49€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <p class="mt-6 text-sm text-[#888]">2 supports au choix (Menus, Affiches...)</p>
+          </div>
+          <div class="pricing-card rounded-2xl p-8 flex flex-col">
+            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Pack Design</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">99€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <p class="mt-6 text-sm text-[#888]">5 supports au choix + identité visuelle</p>
+          </div>
+          <div class="pricing-card rounded-2xl p-8 flex flex-col">
+            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Brand Kit Complet</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">149€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <p class="mt-6 text-sm text-[#888]">Logo + Palette + Typos + 5 supports</p>
+          </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+          <div class="pricing-card rounded-2xl p-8 border-2 border-[#00FF88] relative bg-[#111]">
+            <span class="absolute -top-3 left-6 bg-[#00FF88] text-[#0D0D0D] text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Combo Gagnant</span>
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+              <div>
+                <h3 class="text-2xl font-bold mb-2">Offre "Full Vibe"</h3>
+                <p class="text-[#888] text-sm max-w-sm">La totale pour exploser vos résultats : pack vidéo complet + identité visuelle pro.</p>
+                <ul class="mt-4 space-y-1 text-sm text-[#aaa]"><li>✓ Pack Trio (3 Vidéos Ads)</li><li>✓ Brand Kit Complet (Logo & Supports)</li><li>✓ Livraison Prioritaire</li></ul>
+              </div>
+              <div class="text-center md:text-right">
+                <div class="text-5xl font-800">179€</div>
+                <p class="text-xs text-[#555] mt-1">Valeur réelle : 218€</p>
+                <a href="/cdn-cgi/l/email-protection#4b3d22292e652a2f3865383f3e2f22247a0b2c262a22276528242674383e29212e283f76082426262a252f2e6e797b0d3e27276e797b1d22292e" class="mt-6 inline-flex items-center gap-2 bg-[#00FF88] text-[#0D0D0D] font-bold text-sm px-8 py-3 rounded-full hover:scale-105 transition-transform">Démarrer le projet</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="w-full px-6 md:px-12 lg:px-20 py-32 text-center border-t border-[#1a1a1a]">
+        <h2 class="text-3xl md:text-5xl font-800 max-w-lg mx-auto mb-10">Une campagne à lancer ?</h2>
+        <a href="/cdn-cgi/l/email-protection#e4928d8681ca858097ca979091808d8bd5a48389858d88ca878b89" class="inline-flex items-center gap-3 border-2 border-[#00FF88] text-[#00FF88] font-bold text-sm tracking-wide px-10 py-4 rounded-full hover:bg-[#00FF88] hover:text-[#0D0D0D] transition-colors"><span>Me contacter</span><i data-lucide="arrow-right" style="width: 16px; height: 16px"></i></a>
+      </section>
+
+      <footer class="w-full px-6 py-8 border-t border-[#1a1a1a] text-center"><p class="font-mono text-[10px] text-[#333] tracking-widest uppercase">© 2026 Vibe Ads Studio — Tous droits réservés</p></footer>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+      const videos = [
+        { t: "UGC - Démo 1", c: "UGC", s: "videos/video1.mp4" }, { t: "TV Spot - Démo 2", c: "Premium", s: "videos/video2.mp4" },
+        { t: "Tutorial - Démo 3", c: "Usage", s: "videos/video3.mp4" }, { t: "Unboxing - Démo 4", c: "UGC", s: "videos/video4.mp4" },
+        { t: "Lifestyle - Démo 5", c: "Brand", s: "videos/video5.mp4" }, { t: "Review - Démo 6", c: "Conversion", s: "videos/video6.mp4" },
+        { t: "Hook Test - Démo 7", c: "Ads", s: "videos/video7.mp4" }, { t: "Storytelling - Démo 8", c: "Premium", s: "videos/video8.mp4" }
+      ];
+
+      const track = document.getElementById("carouselTrack");
+      const dots = document.getElementById("carouselDots");
+      const pB = document.getElementById("prevBtn");
+      const nB = document.getElementById("nextBtn");
+      let cur = 0; let view = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+
+      function draw() {
+        track.innerHTML = videos.map(v => `<article class="portfolio-slide px-2"><div class="video-frame aspect-video rounded-2xl overflow-hidden bg-[#111] flex items-center justify-center border border-[#1f1f1f]"><span class="text-[10px] text-[#333] font-mono uppercase">Vidéo Démo</span></div><p class="mt-3 font-mono text-xs text-[#555] tracking-widest uppercase">${v.c}</p><p class="mt-2 text-sm text-[#888] font-medium">${v.t}</p></article>`).join("");
+        dots.innerHTML = ""; for(let i=0; i < (videos.length-view+1); i++) { const d = document.createElement("button"); d.className = "carousel-dot "+(i===cur?"active":""); d.onclick=()=>{cur=i;up();}; dots.appendChild(d); }
+      }
+      function up() { track.style.transform = `translateX(-${(100/view)*cur}%)`; [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===cur)); pB.disabled=cur===0; nB.disabled=cur>=(videos.length-view); pB.classList.toggle("opacity-40",pB.disabled); nB.classList.toggle("opacity-40",nB.disabled); }
+      nB.onclick = () => { if(cur<videos.length-view){cur++;up();} }; pB.onclick = () => { if(cur>0){cur--;up();} };
+      window.onresize = () => { let nv = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1; if(nv!==view){view=nv;cur=0;draw();up();} };
+      draw(); up(); lucide.createIcons();
+    </script>
+  </body>
+</html>
