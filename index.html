@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="fr" class="h-full" style="scroll-behavior: smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibe Ads Studio — Video Ads Creator</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ["Outfit", "sans-serif"],
+              mono: ["Space Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes glowPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+        }
+      }
+      .fade-up {
+        animation: fadeUp 0.8s ease forwards;
+        opacity: 0;
+      }
+      .fade-up-d1 {
+        animation-delay: 0.1s;
+      }
+      .fade-up-d2 {
+        animation-delay: 0.25s;
+      }
+      .fade-up-d3 {
+        animation-delay: 0.4s;
+      }
+      .fade-up-d4 {
+        animation-delay: 0.55s;
+      }
+      .glow-card {
+        animation: glowPulse 3s ease-in-out infinite;
+      }
+      .vid-placeholder {
+        background: linear-gradient(135deg, #111 0%, #1a1a1a 50%, #111 100%);
+        position: relative;
+        overflow: hidden;
+      }
+      .vid-placeholder::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 40%,
+          rgba(0, 255, 136, 0.03) 50%,
+          transparent 60%
+        );
+      }
+      .pricing-card {
+        background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
+        border: 1px solid #1f1f1f;
+        transition: border-color 0.3s, transform 0.3s;
+      }
+      .pricing-card:hover {
+        border-color: #00ff88;
+        transform: translateY(-4px);
+      }
+      .recommended-card {
+        border-color: #00ff88;
+      }
+
+      .carousel-track {
+        transition: transform 0.45s ease;
+      }
+      .portfolio-slide {
+        flex: 0 0 100%;
+      }
+      @media (min-width: 768px) {
+        .portfolio-slide {
+          flex-basis: 50%;
+        }
+      }
+      @media (min-width: 1024px) {
+        .portfolio-slide {
+          flex-basis: 33.333333%;
+        }
+      }
+
+      .carousel-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: #2a2a2a;
+        border: 1px solid #3a3a3a;
+        transition: all 0.25s ease;
+      }
+      .carousel-dot.active {
+        width: 24px;
+        background: #00ff88;
+        border-color: #00ff88;
+      }
+
+      .video-frame {
+        background: #0a0a0a;
+        border: 1px solid #1f1f1f;
+      }
+      .video-frame iframe,
+      .video-frame video {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+        border-radius: 1rem;
+      }
+
+      body {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body class="h-full bg-[#0D0D0D] text-white font-heading overflow-auto">
+    <div class="w-full min-h-full">
+      <nav class="w-full px-6 md:px-12 lg:px-20 py-6 flex items-center justify-between border-b border-[#1a1a1a]">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-[#00FF88] to-[#00cc6a] rounded-lg flex items-center justify-center">
+            <span class="text-[#0D0D0D] font-900 text-sm">V</span>
+          </div>
+          <span class="font-bold text-lg tracking-tight">Vibe Ads Studio</span>
+        </div>
+        <a
+          href="mailto:vibe.ads.studio1@gmail.com"
+          class="text-[10px] font-mono text-[#555] hover:text-[#00FF88] transition-colors tracking-widest uppercase"
+          >Contact</a
+        >
+      </nav>
+
+      <section class="w-full flex flex-col items-center justify-center text-center px-6 py-32 md:py-44 relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#00FF88] opacity-[0.03] rounded-full blur-[120px] pointer-events-none"></div>
+        <p class="fade-up fade-up-d1 font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-6">Créateur de contenu vidéo</p>
+        <h1 class="fade-up fade-up-d2 text-5xl md:text-7xl lg:text-8xl font-900 tracking-tight leading-[0.95] max-w-4xl">Vidéos publicitaires qui convertissent</h1>
+        <p class="fade-up fade-up-d3 mt-6 text-lg md:text-xl text-[#888] font-light max-w-xl leading-relaxed">
+          UGC • TV Spots • Product Ads<br />
+          <span class="block text-sm text-[#666] mt-2">Optimisé pour TikTok &amp; Meta Ads</span>
+        </p>
+        <a
+          href="#portfolio"
+          class="fade-up fade-up-d4 mt-10 inline-flex items-center gap-2 bg-[#00FF88] text-[#0D0D0D] font-bold text-sm tracking-wide px-8 py-4 rounded-full hover:scale-105 transition-transform"
+        >
+          <span>Voir le Portfolio</span>
+          <i data-lucide="arrow-down" style="width: 16px; height: 16px"></i>
+        </a>
+      </section>
+
+      <section id="portfolio" class="w-full px-6 md:px-12 lg:px-20 py-20">
+        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-3">Réalisations</p>
+        <div class="flex items-center justify-between gap-4 mb-12 flex-wrap">
+          <h2 class="text-3xl md:text-4xl font-800">Portfolio</h2>
+          <p class="text-xs md:text-sm text-[#666] font-mono uppercase tracking-wider">
+            Ajoutez vos liens YouTube / Vimeo / MP4 dans <span class="text-[#00FF88]">portfolioVideos</span>
+          </p>
+        </div>
+
+        <div class="relative">
+          <div class="overflow-hidden rounded-2xl">
+            <div id="carouselTrack" class="carousel-track flex"></div>
+          </div>
+
+          <div class="flex items-center justify-between mt-8">
+            <div class="flex items-center gap-3">
+              <button
+                id="prevBtn"
+                type="button"
+                class="w-11 h-11 rounded-full border border-[#2b2b2b] hover:border-[#00FF88] hover:text-[#00FF88] transition-colors flex items-center justify-center"
+                aria-label="Vidéo précédente"
+              >
+                <i data-lucide="chevron-left" style="width: 18px; height: 18px"></i>
+              </button>
+              <button
+                id="nextBtn"
+                type="button"
+                class="w-11 h-11 rounded-full border border-[#2b2b2b] hover:border-[#00FF88] hover:text-[#00FF88] transition-colors flex items-center justify-center"
+                aria-label="Vidéo suivante"
+              >
+                <i data-lucide="chevron-right" style="width: 18px; height: 18px"></i>
+              </button>
+            </div>
+            <div id="carouselDots" class="flex items-center gap-2"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="w-full px-6 md:px-12 lg:px-20 py-20 border-t border-b border-[#1a1a1a]">
+        <div class="flex items-center gap-2 mb-8">
+          <i data-lucide="zap" style="width: 18px; height: 18px; color: #00FF88"></i>
+          <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase">Process simple &amp; rapide</p>
+        </div>
+        <div class="max-w-3xl space-y-8">
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#00FF88] text-[#0D0D0D] flex items-center justify-center font-bold text-sm">1</div>
+            <div class="flex-1">
+              <p class="font-700 text-white text-base">Brief rapide</p>
+              <p class="text-sm text-[#888] mt-2">Vous m'envoyez votre produit, lien ou quelques visuels.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#00FF88] text-[#0D0D0D] flex items-center justify-center font-bold text-sm">2</div>
+            <div class="flex-1">
+              <p class="font-700 text-white text-base">Proposition créative</p>
+              <p class="text-sm text-[#888] mt-2">Je vous propose 1 à 3 angles (UGC, storytelling ou produit) + script.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#00FF88] text-[#0D0D0D] flex items-center justify-center font-bold text-sm">3</div>
+            <div class="flex-1">
+              <p class="font-700 text-white text-base">Validation &amp; ajustements</p>
+              <p class="text-sm text-[#888] mt-2">Vous validez ou ajustez rapidement si besoin.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#00FF88] text-[#0D0D0D] flex items-center justify-center font-bold text-sm">4</div>
+            <div class="flex-1">
+              <p class="font-700 text-white text-base">Livraison express</p>
+              <p class="text-sm text-[#888] mt-2">Vidéo prête à poster en 48h.</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-10 pt-8 border-t border-[#1a1a1a]">
+          <p class="text-sm text-[#666] italic">👉 Possibilité de travailler à partir de votre script si vous en avez un.</p>
+        </div>
+      </section>
+
+      <section id="pricing" class="w-full px-6 md:px-12 lg:px-20 py-20">
+        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-3">Offres</p>
+        <h2 class="text-3xl md:text-4xl font-800 mb-12">Tarifs</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
+          <div class="pricing-card rounded-2xl p-8 flex flex-col">
+            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Essai Solo</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">29€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <p class="mt-6 text-sm text-[#888]">1 vidéo UGC</p>
+            <p class="mt-2 text-sm text-[#555]">Format vertical</p>
+            <p class="mt-2 text-sm text-[#555]">1 révision</p>
+          </div>
+          <div class="pricing-card recommended-card glow-card rounded-2xl p-8 flex flex-col relative">
+            <span class="absolute -top-3 right-6 bg-[#00FF88] text-[#0D0D0D] text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Recommandé</span>
+            <p class="font-mono text-xs text-[#00FF88] tracking-widest uppercase">Pack Trio</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">69€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <p class="mt-6 text-sm text-[#888]">3 vidéos</p>
+            <p class="mt-2 text-sm text-[#555]">Multi-format</p>
+            <p class="mt-2 text-sm text-[#555]">3 Angles de vente différents</p>
+          </div>
+          <div class="pricing-card rounded-2xl p-8 flex flex-col">
+            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Option Premium (TV Spot) +20€</p>
+            <p class="mt-2 text-xs text-[#666] font-light">En complément d'une vidéo / d'un pack</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">+20€</span></div>
+            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
+            <p class="mt-6 text-sm text-[#888]">Rendu premium</p>
+            <p class="mt-2 text-sm text-[#555]">Color grading</p>
+            <p class="mt-2 text-sm text-[#555]">Motion design</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="w-full px-6 md:px-12 lg:px-20 py-32 text-center">
+        <h2 class="text-3xl md:text-5xl font-800 max-w-lg mx-auto leading-tight">Une campagne à lancer ?</h2>
+        <p class="mt-6 text-lg text-[#888] max-w-lg mx-auto">Testez de nouveaux créatifs chaque semaine, sans exploser votre budget</p>
+        <a
+          href="mailto:vibe.ads.studio1@gmail.com?subject=Demande%20de%20Video%20Ads"
+          class="mt-10 inline-flex items-center gap-3 border-2 border-[#00FF88] text-[#00FF88] font-bold text-sm tracking-wide px-10 py-4 rounded-full hover:bg-[#00FF88] hover:text-[#0D0D0D] transition-colors"
+        >
+          <span>Me contacter</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px"></i>
+        </a>
+        <p class="mt-4 text-sm text-[#666]">👉 Réponse en moins de 24h</p>
+      </section>
+
+      <footer class="w-full px-6 py-8 border-t border-[#1a1a1a] flex items-center justify-center">
+        <p class="font-mono text-[10px] text-[#333] tracking-widest uppercase">© 2026 Vibe Ads Studio — Tous droits réservés</p>
+      </footer>
+    </div>
+
+    <script>
+      /**
+       * Portfolio editable list:
+       * - type: 'youtube' | 'vimeo' | 'file' | 'empty'
+       * - src: URL (YouTube/Vimeo/file path)
+       */
+      const portfolioVideos = [
+        {
+          title: "Votre vidéo actuelle",
+          category: "UGC",
+          description: "Remplacez src avec votre lien YouTube/Vimeo ou fichier local.",
+          type: "empty",
+          src: "",
+        },
+        {
+          title: "Emplacement #2",
+          category: "TV Spot",
+          description: "Ajoutez un deuxième exemple pour renforcer votre crédibilité.",
+          type: "empty",
+          src: "",
+        },
+        {
+          title: "Emplacement #3",
+          category: "Product Ads",
+          description: "Montrez les détails produit et la transformation visuelle.",
+          type: "empty",
+          src: "",
+        },
+        { title: "Emplacement #4", category: "UGC", description: "Ajoutez une vidéo verticale performante.", type: "empty", src: "" },
+        { title: "Emplacement #5", category: "UGC", description: "Ajoutez une variation d’angle créatif.", type: "empty", src: "" },
+        { title: "Emplacement #6", category: "TV Spot", description: "Ajoutez un format premium plus cinématique.", type: "empty", src: "" },
+        { title: "Emplacement #7", category: "Product Ads", description: "Ajoutez un close-up produit orienté conversion.", type: "empty", src: "" },
+        { title: "Emplacement #8", category: "Wildcard", description: "Ajoutez votre meilleur test créatif du moment.", type: "empty", src: "" },
+      ];
+
+      const carouselTrack = document.getElementById("carouselTrack");
+      const carouselDots = document.getElementById("carouselDots");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      let currentIndex = 0;
+      let slidesPerView = getSlidesPerView();
+
+      function getSlidesPerView() {
+        if (window.innerWidth >= 1024) return 3;
+        if (window.innerWidth >= 768) return 2;
+        return 1;
+      }
+
+      function youtubeEmbed(url) {
+        const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([^?&/]+)/);
+        return match ? `https://www.youtube.com/embed/${match[1]}` : "";
+      }
+
+      function vimeoEmbed(url) {
+        const match = url.match(/vimeo\.com\/(\d+)/);
+        return match ? `https://player.vimeo.com/video/${match[1]}` : "";
+      }
+
+      function renderMedia(video) {
+        if (!video.src || video.type === "empty") {
+          return `
+            <div class="vid-placeholder aspect-video rounded-2xl flex flex-col items-center justify-center gap-2">
+              <i data-lucide="play-circle" style="width:48px;height:48px;color:#333"></i>
+              <p class="text-[11px] uppercase tracking-widest text-[#555] font-mono">Emplacement vidéo</p>
+            </div>
+          `;
+        }
+
+        if (video.type === "youtube") {
+          const embed = youtubeEmbed(video.src);
+          return embed
+            ? `<div class="video-frame aspect-video rounded-2xl overflow-hidden"><iframe src="${embed}" title="${video.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>`
+            : `<div class="vid-placeholder aspect-video rounded-2xl flex items-center justify-center"><p class="text-xs text-[#666]">URL YouTube invalide</p></div>`;
+        }
+
+        if (video.type === "vimeo") {
+          const embed = vimeoEmbed(video.src);
+          return embed
+            ? `<div class="video-frame aspect-video rounded-2xl overflow-hidden"><iframe src="${embed}" title="${video.title}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`
+            : `<div class="vid-placeholder aspect-video rounded-2xl flex items-center justify-center"><p class="text-xs text-[#666]">URL Vimeo invalide</p></div>`;
+        }
+
+        if (video.type === "file") {
+          return `<div class="video-frame aspect-video rounded-2xl overflow-hidden"><video controls preload="metadata"><source src="${video.src}" />Votre navigateur ne supporte pas la lecture vidéo.</video></div>`;
+        }
+
+        return `<div class="vid-placeholder aspect-video rounded-2xl flex items-center justify-center"><p class="text-xs text-[#666]">Type non supporté</p></div>`;
+      }
+
+      function renderSlides() {
+        carouselTrack.innerHTML = portfolioVideos
+          .map(
+            (video, index) => `
+              <article class="portfolio-slide px-2 md:px-3" data-index="${index}">
+                ${renderMedia(video)}
+                <p class="mt-3 font-mono text-xs text-[#555] tracking-widest uppercase">${video.category}</p>
+                <p class="mt-2 text-sm text-[#888] leading-relaxed font-medium">${video.title}</p>
+                <p class="mt-2 text-sm text-[#666] leading-relaxed">${video.description}</p>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function totalPages() {
+        return Math.max(1, portfolioVideos.length - slidesPerView + 1);
+      }
+
+      function renderDots() {
+        carouselDots.innerHTML = "";
+        for (let i = 0; i < totalPages(); i += 1) {
+          const dot = document.createElement("button");
+          dot.className = `carousel-dot ${i === currentIndex ? "active" : ""}`;
+          dot.setAttribute("aria-label", `Aller à la position ${i + 1}`);
+          dot.addEventListener("click", () => {
+            currentIndex = i;
+            updateCarousel();
+          });
+          carouselDots.appendChild(dot);
+        }
+      }
+
+      function updateButtons() {
+        const atStart = currentIndex <= 0;
+        const atEnd = currentIndex >= totalPages() - 1;
+        prevBtn.disabled = atStart;
+        nextBtn.disabled = atEnd;
+        prevBtn.classList.toggle("opacity-40", atStart);
+        nextBtn.classList.toggle("opacity-40", atEnd);
+      }
+
+      function updateCarousel() {
+        const offsetPercent = (100 / slidesPerView) * currentIndex;
+        carouselTrack.style.transform = `translateX(-${offsetPercent}%)`;
+
+        [...carouselDots.children].forEach((dot, i) => {
+          dot.classList.toggle("active", i === currentIndex);
+        });
+
+        updateButtons();
+      }
+
+      prevBtn.addEventListener("click", () => {
+        currentIndex = Math.max(0, currentIndex - 1);
+        updateCarousel();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        currentIndex = Math.min(totalPages() - 1, currentIndex + 1);
+        updateCarousel();
+      });
+
+      window.addEventListener("resize", () => {
+        const nextSlidesPerView = getSlidesPerView();
+        if (nextSlidesPerView !== slidesPerView) {
+          slidesPerView = nextSlidesPerView;
+          currentIndex = Math.min(currentIndex, totalPages() - 1);
+          renderDots();
+          updateCarousel();
+        }
+      });
+
+      renderSlides();
+      renderDots();
+      updateCarousel();
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
