@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vibe Ads Studio — Video Ads Creator</title>
+    <title>Vibe Ads Studio — UGC Ads en 48 h</title>
+    <meta
+      name="description"
+      content="Vos pubs UGC livrées en 48 h, prêtes à scaler sur Meta & TikTok Ads. Tarifs de lancement réservés aux 10 premiers clients."
+    />
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
     <link
@@ -23,170 +27,362 @@
       };
     </script>
     <style>
-      @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes glowPulse { 0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.15); } 50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.3); } }
-      .fade-up { animation: fadeUp 0.8s ease forwards; opacity: 0; }
-      .fade-up-d1 { animation-delay: 0.1s; }
-      .fade-up-d2 { animation-delay: 0.25s; }
-      .fade-up-d3 { animation-delay: 0.4s; }
-      .fade-up-d4 { animation-delay: 0.55s; }
-      .glow-card { animation: glowPulse 3s ease-in-out infinite; }
-      .vid-placeholder { background: linear-gradient(135deg, #111 0%, #1a1a1a 50%, #111 100%); position: relative; overflow: hidden; }
-      .pricing-card { background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%); border: 1px solid #1f1f1f; transition: border-color 0.3s, transform 0.3s; }
-      .pricing-card:hover { border-color: #00ff88; transform: translateY(-4px); }
-      .recommended-card { border-color: #00ff88; }
-      .carousel-track { transition: transform 0.45s ease; }
-      .portfolio-slide { flex: 0 0 100%; }
-      @media (min-width: 768px) { .portfolio-slide { flex-basis: 50%; } }
-      @media (min-width: 1024px) { .portfolio-slide { flex-basis: 33.333333%; } }
-      .carousel-dot { width: 9px; height: 9px; border-radius: 999px; background: #2a2a2a; border: 1px solid #3a3a3a; transition: all 0.25s ease; }
-      .carousel-dot.active { width: 24px; background: #00ff88; border-color: #00ff88; }
-      .video-frame { background: #0a0a0a; border: 1px solid #1f1f1f; }
+      .section-title { letter-spacing: -0.02em; }
+      .card {
+        background: linear-gradient(180deg, #151515 0%, #0f0f0f 100%);
+        border: 1px solid #1f1f1f;
+      }
+      .card:hover { border-color: #00ff88; }
+      .cta-main { box-shadow: 0 0 28px rgba(0, 255, 136, 0.18); }
+      .best-seller { box-shadow: 0 0 40px rgba(0, 255, 136, 0.16); }
+      .video-overlay {
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.82) 70%);
+      }
+      .video-card:hover .video-overlay { opacity: 1; }
     </style>
   </head>
-  <body class="h-full bg-[#0D0D0D] text-white font-heading overflow-auto">
-    <div class="w-full min-h-full">
-      <nav class="w-full px-6 md:px-12 lg:px-20 py-6 flex items-center justify-between border-b border-[#1a1a1a]">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 bg-gradient-to-br from-[#00FF88] to-[#00cc6a] rounded-lg flex items-center justify-center"><span class="text-[#0D0D0D] font-900 text-sm">V</span></div>
-          <span class="font-bold text-lg tracking-tight">Vibe Ads Studio</span>
-        </div>
-        <a href="/cdn-cgi/l/email-protection#65130c07004b0401164b161110010c0a54250208040c094b060a08" class="text-[10px] font-mono text-[#555] hover:text-[#00FF88] transition-colors tracking-widest uppercase">Contact</a>
-      </nav>
-
-      <section class="w-full flex flex-col items-center justify-center text-center px-6 py-32 md:py-44 relative">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#00FF88] opacity-[0.03] rounded-full blur-[120px] pointer-events-none"></div>
-        <p class="fade-up fade-up-d1 font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-6">Créateur de contenu vidéo</p>
-        <h1 class="fade-up fade-up-d2 text-5xl md:text-7xl lg:text-8xl font-900 tracking-tight leading-[0.95] max-w-4xl">Vidéos publicitaires qui convertissent</h1>
-        <p class="fade-up fade-up-d3 mt-6 text-lg md:text-xl text-[#888] font-light max-w-xl leading-relaxed">UGC • TV Spots • Product Ads<br /><span class="block text-sm text-[#666] mt-2">Optimisé pour TikTok & Meta Ads</span></p>
-        <a href="#portfolio" class="fade-up fade-up-d4 mt-10 inline-flex items-center gap-2 bg-[#00FF88] text-[#0D0D0D] font-bold text-sm tracking-wide px-8 py-4 rounded-full hover:scale-105 transition-transform"><span>Voir le Portfolio</span><i data-lucide="arrow-down" style="width: 16px; height: 16px"></i></a>
-      </section>
-
-      <section id="portfolio" class="w-full px-6 md:px-12 lg:px-20 py-20">
-        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-3">Réalisations</p>
-        <h2 class="text-3xl md:text-4xl font-800 mb-12">Portfolio</h2>
-        <div class="relative">
-          <div class="overflow-hidden rounded-2xl"><div id="carouselTrack" class="carousel-track flex"></div></div>
-          <div class="flex items-center justify-between mt-8">
-            <div class="flex items-center gap-3">
-              <button id="prevBtn" type="button" class="w-11 h-11 rounded-full border border-[#2b2b2b] hover:border-[#00FF88] flex items-center justify-center transition-colors opacity-40" disabled><i data-lucide="chevron-left" style="width: 18px; height: 18px"></i></button>
-              <button id="nextBtn" type="button" class="w-11 h-11 rounded-full border border-[#2b2b2b] hover:border-[#00FF88] flex items-center justify-center transition-colors"><i data-lucide="chevron-right" style="width: 18px; height: 18px"></i></button>
-            </div>
-            <div id="carouselDots" class="flex items-center gap-2"></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="branding" class="w-full px-6 md:px-12 lg:px-20 py-20 border-t border-[#1a1a1a]">
-        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-3">Identité visuelle</p>
-        <h2 class="text-3xl md:text-4xl font-800 mb-4">Design & Brand Kit</h2>
-        <p class="text-[#888] text-sm max-w-2xl mb-10">Logo, affiches, menus, flyers… Je crée une identité cohérente adaptée à votre marque sous 48-72h.</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div class="border border-dashed border-[#2a2a2a] rounded-xl p-4 text-sm text-[#aaa]">Logo & Identité</div>
-          <div class="border border-dashed border-[#2a2a2a] rounded-xl p-4 text-sm text-[#aaa]">Menus / Affiches</div>
-          <div class="border border-dashed border-[#2a2a2a] rounded-xl p-4 text-sm text-[#aaa]">Flyers / Cartes</div>
-          <div class="border border-dashed border-[#2a2a2a] rounded-xl p-4 text-sm text-[#aaa]">Templates Sociaux</div>
-        </div>
-      </section>
-
-      <section id="pricing" class="w-full px-6 md:px-12 lg:px-20 py-20 border-t border-[#1a1a1a]">
-        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-6">Tarifs de lancement</p>
-        <h2 class="text-3xl md:text-4xl font-800 mb-12">Nos Offres</h2>
-
-        <p class="font-mono text-[#555] text-xs tracking-[0.25em] uppercase mb-6">— Video Ads</p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div class="pricing-card rounded-2xl p-8 flex flex-col">
-            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Essai Solo</p>
-            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">29€</span></div>
-            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
-            <ul class="mt-6 space-y-2 text-sm text-[#888]"><li>1 vidéo UGC</li><li>Format 9:16 vertical</li><li>1 révision</li></ul>
-          </div>
-          <div class="pricing-card recommended-card glow-card rounded-2xl p-8 flex flex-col relative">
-            <span class="absolute -top-3 right-6 bg-[#00FF88] text-[#0D0D0D] text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Populaire</span>
-            <p class="font-mono text-xs text-[#00FF88] tracking-widest uppercase">Pack Trio</p>
-            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">69€</span></div>
-            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
-            <ul class="mt-6 space-y-2 text-sm text-[#888]"><li>3 vidéos UGC / Ads</li><li>3 angles de vente</li><li>Livraison express 48h</li></ul>
-          </div>
-          <div class="pricing-card rounded-2xl p-8 flex flex-col">
-            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Option Premium</p>
-            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">+20€</span></div>
-            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
-            <ul class="mt-6 space-y-2 text-sm text-[#888]"><li>Traitement TV Spot</li><li>Rendu cinématique</li><li>Effets avancés</li></ul>
-          </div>
-        </div>
-
-        <p class="font-mono text-[#555] text-xs tracking-[0.25em] uppercase mb-6">— Design & Brand Kit</p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div class="pricing-card rounded-2xl p-8 flex flex-col">
-            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Pack Visuels</p>
-            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">49€</span></div>
-            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
-            <p class="mt-6 text-sm text-[#888]">2 supports au choix (Menus, Affiches...)</p>
-          </div>
-          <div class="pricing-card rounded-2xl p-8 flex flex-col">
-            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Pack Design</p>
-            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">99€</span></div>
-            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
-            <p class="mt-6 text-sm text-[#888]">5 supports au choix + identité visuelle</p>
-          </div>
-          <div class="pricing-card rounded-2xl p-8 flex flex-col">
-            <p class="font-mono text-xs text-[#555] tracking-widest uppercase">Brand Kit Complet</p>
-            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-800">149€</span></div>
-            <div class="mt-6 h-px bg-[#1f1f1f]"></div>
-            <p class="mt-6 text-sm text-[#888]">Logo + Palette + Typos + 5 supports</p>
-          </div>
-        </div>
-
-        <div class="max-w-4xl mx-auto">
-          <div class="pricing-card rounded-2xl p-8 border-2 border-[#00FF88] relative bg-[#111]">
-            <span class="absolute -top-3 left-6 bg-[#00FF88] text-[#0D0D0D] text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Combo Gagnant</span>
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-              <div>
-                <h3 class="text-2xl font-bold mb-2">Offre "Full Vibe"</h3>
-                <p class="text-[#888] text-sm max-w-sm">La totale pour exploser vos résultats : pack vidéo complet + identité visuelle pro.</p>
-                <ul class="mt-4 space-y-1 text-sm text-[#aaa]"><li>✓ Pack Trio (3 Vidéos Ads)</li><li>✓ Brand Kit Complet (Logo & Supports)</li><li>✓ Livraison Prioritaire</li></ul>
-              </div>
-              <div class="text-center md:text-right">
-                <div class="text-5xl font-800">179€</div>
-                <p class="text-xs text-[#555] mt-1">Valeur réelle : 218€</p>
-                <a href="/cdn-cgi/l/email-protection#0c7a656e69226d687f227f78796865633d4c6b616d6560226f6361337f796e66696f78314f6361616d626869293e3c4a796060293e3c5a656e69" class="mt-6 inline-flex items-center gap-2 bg-[#00FF88] text-[#0D0D0D] font-bold text-sm px-8 py-3 rounded-full hover:scale-105 transition-transform">Démarrer le projet</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="w-full px-6 md:px-12 lg:px-20 py-32 text-center border-t border-[#1a1a1a]">
-        <h2 class="text-3xl md:text-5xl font-800 max-w-lg mx-auto mb-10">Une campagne à lancer ?</h2>
-        <a href="/cdn-cgi/l/email-protection#e99f808b8cc7888d9ac79a9d9c8d8086d8a98e84888085c78a8684" class="inline-flex items-center gap-3 border-2 border-[#00FF88] text-[#00FF88] font-bold text-sm tracking-wide px-10 py-4 rounded-full hover:bg-[#00FF88] hover:text-[#0D0D0D] transition-colors"><span>Me contacter</span><i data-lucide="arrow-right" style="width: 16px; height: 16px"></i></a>
-      </section>
-
-      <footer class="w-full px-6 py-8 border-t border-[#1a1a1a] text-center"><p class="font-mono text-[10px] text-[#333] tracking-widest uppercase">© 2026 Vibe Ads Studio — Tous droits réservés</p></footer>
+  <body class="h-full bg-[#0D0D0D] text-white font-heading">
+    <div class="bg-[#1b1200] border-b border-[#4d3700] text-[#ffcf66] text-center text-xs font-semibold py-2 px-4">
+      🔥 Tarifs de lancement — réservés aux 10 premiers clients. Les prix doublent le 1er juin 2026.
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-      const videos = [
-        { t: "UGC - Démo 1", c: "UGC", s: "videos/video1.mp4" }, { t: "TV Spot - Démo 2", c: "Premium", s: "videos/video2.mp4" },
-        { t: "Tutorial - Démo 3", c: "Usage", s: "videos/video3.mp4" }, { t: "Unboxing - Démo 4", c: "UGC", s: "videos/video4.mp4" },
-        { t: "Lifestyle - Démo 5", c: "Brand", s: "videos/video5.mp4" }, { t: "Review - Démo 6", c: "Conversion", s: "videos/video6.mp4" },
-        { t: "Hook Test - Démo 7", c: "Ads", s: "videos/video7.mp4" }, { t: "Storytelling - Démo 8", c: "Premium", s: "videos/video8.mp4" }
-      ];
+    <header class="sticky top-0 z-40 bg-[#0D0D0D]/95 backdrop-blur border-b border-[#1a1a1a]">
+      <nav class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between gap-4">
+        <a href="#top" class="flex items-center gap-2">
+          <span class="w-8 h-8 bg-gradient-to-br from-[#00FF88] to-[#00cc6a] rounded-lg flex items-center justify-center text-[#0D0D0D] font-black">V</span>
+          <span class="font-bold">Vibe Ads Studio</span>
+        </a>
+        <div class="hidden md:flex items-center gap-5 text-sm text-[#a9a9a9]">
+          <a href="#portfolio" class="hover:text-[#00FF88]">Portfolio</a>
+          <a href="#pricing" class="hover:text-[#00FF88]">Tarifs</a>
+          <a href="#process" class="hover:text-[#00FF88]">Process</a>
+          <a href="#faq" class="hover:text-[#00FF88]">FAQ</a>
+          <a href="#contact" class="hover:text-[#00FF88]">Contact</a>
+        </div>
+        <a href="#pricing" class="cta-main inline-flex items-center gap-2 bg-[#00FF88] text-[#0D0D0D] text-sm font-bold px-4 py-2 rounded-full hover:scale-[1.02] transition-transform">
+          Commander à 29 €
+        </a>
+      </nav>
+    </header>
 
-      const track = document.getElementById("carouselTrack");
-      const dots = document.getElementById("carouselDots");
-      const pB = document.getElementById("prevBtn");
-      const nB = document.getElementById("nextBtn");
-      let cur = 0; let view = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+    <main id="top">
+      <section class="max-w-7xl mx-auto px-5 md:px-8 py-20 md:py-28 text-center">
+        <p class="font-mono text-[#00FF88] text-xs tracking-[0.3em] uppercase mb-5">UGC · TV Spot Look · Brand Kit</p>
+        <h1 class="section-title text-4xl md:text-6xl lg:text-7xl font-black leading-tight max-w-5xl mx-auto">
+          Vos pubs UGC livrées en 48 h, prêtes à scaler sur Meta & TikTok Ads.
+        </h1>
+        <p class="mt-6 text-[#9b9b9b] max-w-3xl mx-auto text-lg">
+          Pour les TPE, PME et DNVB françaises qui veulent tester 3 angles publicitaires par semaine sans exploser leur budget créa.
+        </p>
+        <p class="mt-4 text-[#d6d6d6] text-sm md:text-base">⚡ 48 h chrono · 🎯 Droits Meta & TikTok Ads inclus · 🔁 Révisions gratuites · 💸 Satisfait ou remboursé</p>
+        <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a href="#pricing" class="cta-main inline-flex items-center gap-2 bg-[#00FF88] text-[#0D0D0D] font-bold px-8 py-4 rounded-full">Commander ma 1re vidéo à 29 € →</a>
+          <a href="#portfolio" class="inline-flex items-center gap-2 border border-[#00FF88] text-[#00FF88] font-semibold px-8 py-4 rounded-full hover:bg-[#00FF88] hover:text-[#0D0D0D] transition-colors">Voir les réalisations</a>
+        </div>
+      </section>
 
-      function draw() {
-        track.innerHTML = videos.map(v => `<article class="portfolio-slide px-2"><div class="video-frame aspect-video rounded-2xl overflow-hidden bg-[#111] flex items-center justify-center border border-[#1f1f1f]"><span class="text-[10px] text-[#333] font-mono uppercase">Vidéo Démo</span></div><p class="mt-3 font-mono text-xs text-[#555] tracking-widest uppercase">${v.c}</p><p class="mt-2 text-sm text-[#888] font-medium">${v.t}</p></article>`).join("");
-        dots.innerHTML = ""; for(let i=0; i < (videos.length-view+1); i++) { const d = document.createElement("button"); d.className = "carousel-dot "+(i===cur?"active":""); d.onclick=()=>{cur=i;up();}; dots.appendChild(d); }
+      <section class="max-w-7xl mx-auto px-5 md:px-8 pb-12">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+          <div class="card rounded-xl p-4 flex items-center gap-3"><i data-lucide="zap" class="text-[#00FF88]"></i><span>48 h chrono</span></div>
+          <div class="card rounded-xl p-4 flex items-center gap-3"><i data-lucide="target" class="text-[#00FF88]"></i><span>Droits Meta & TikTok Ads inclus</span></div>
+          <div class="card rounded-xl p-4 flex items-center gap-3"><i data-lucide="refresh-cw" class="text-[#00FF88]"></i><span>Révisions illimitées les 7 premiers jours</span></div>
+          <div class="card rounded-xl p-4 flex items-center gap-3"><i data-lucide="badge-check" class="text-[#00FF88]"></i><span>Satisfait ou remboursé</span></div>
+        </div>
+      </section>
+
+      <section class="max-w-7xl mx-auto px-5 md:px-8 py-14 border-t border-[#1a1a1a]">
+        <h2 class="section-title text-3xl md:text-4xl font-black mb-8">Pourquoi Vibe Ads Studio ?</h2>
+        <div class="grid md:grid-cols-2 gap-4 text-[#c7c7c7]">
+          <article class="card rounded-xl p-6">
+            <h3 class="font-bold text-white mb-2">🚀 Vitesse cinglante.</h3>
+            <p>48 h de la commande à la vidéo prête à uploader. Une agence prend 2-3 semaines.</p>
+          </article>
+          <article class="card rounded-xl p-6">
+            <h3 class="font-bold text-white mb-2">🎯 Optimisé pour la perf.</h3>
+            <p>Chaque vidéo intègre 3 hooks testables, un script orienté conversion, un format 9:16 natif Meta/TikTok et tous les codes UGC qui font x4 le CTR vs pub classique.</p>
+          </article>
+          <article class="card rounded-xl p-6">
+            <h3 class="font-bold text-white mb-2">🤖 IA assumée, qualité humaine.</h3>
+            <p>J'utilise Higgsfield Marketing + Seedance 2.0 + GPT Image pour produire vite, et MA tête pour scripter, briefer et monter. Tu profites du meilleur des deux mondes.</p>
+          </article>
+          <article class="card rounded-xl p-6">
+            <h3 class="font-bold text-white mb-2">💸 Droits Meta & TikTok Ads inclus 6 mois.</h3>
+            <p>Tu diffuses sans surcoût caché. Aucun concurrent freelance ne t'offre ça à ce prix.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="portfolio" class="max-w-7xl mx-auto px-5 md:px-8 py-14 border-t border-[#1a1a1a]">
+        <p class="font-mono text-[#00FF88] text-xs tracking-[0.28em] uppercase mb-2">Réalisations</p>
+        <h2 class="section-title text-3xl md:text-4xl font-black">Portfolio vidéo (détection automatique)</h2>
+        <p class="text-[#9b9b9b] mt-3 max-w-3xl">Déposez simplement vos fichiers nommés <code>video1.mp4</code>, <code>video2.mp4</code>, <code>video3.mp4</code>… dans le dossier <code>/videos/</code>. Le site détecte et affiche automatiquement les vidéos disponibles.</p>
+
+        <div id="portfolioGrid" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        <div id="portfolioEmpty" class="mt-8 card rounded-xl p-6 text-[#bdbdbd] hidden">
+          Aucune vidéo détectée pour le moment. Ajoutez vos fichiers MP4 dans le dossier <code>/videos/</code> (voir <code>/videos/README.md</code>).
+        </div>
+      </section>
+
+      <section id="pricing" class="max-w-7xl mx-auto px-5 md:px-8 py-14 border-t border-[#1a1a1a]">
+        <h2 class="section-title text-3xl md:text-4xl font-black mb-8">Offres de lancement</h2>
+
+        <p class="font-mono text-[#777] text-xs tracking-[0.25em] uppercase mb-4">— Offres Vidéo</p>
+        <div class="grid lg:grid-cols-3 gap-6">
+          <article class="card rounded-2xl p-7">
+            <h3 class="text-xl font-bold">Essai Solo — 29 €</h3>
+            <p class="text-[#9f9f9f] text-sm mt-1">(au lieu de 79 € · offre de lancement -63 %)</p>
+            <ul class="mt-5 space-y-2 text-sm text-[#d1d1d1]">
+              <li>• 1 vidéo UGC 20-30 s, format 9:16</li>
+              <li>• 1 angle de vente + 3 hooks A/B testables</li>
+              <li>• Script + voix off IA (FR)</li>
+              <li>• Droits organiques TikTok/Instagram inclus 3 mois</li>
+              <li>• Livrée sous 72 h · 1 révision offerte</li>
+              <li>• 🎯 Idéal pour : tester si l'UGC fonctionne pour ta marque</li>
+            </ul>
+            <a href="#contact" class="mt-6 inline-flex bg-[#00FF88] text-[#0D0D0D] font-bold px-5 py-3 rounded-full">Commander à 29 € →</a>
+          </article>
+
+          <article class="best-seller card rounded-2xl p-7 border-[#00FF88] relative">
+            <span class="absolute -top-3 right-6 bg-[#00FF88] text-[#0D0D0D] text-xs font-black px-3 py-1 rounded-full">⭐ LE PLUS POPULAIRE</span>
+            <h3 class="text-xl font-bold">Pack Trio — 69 €</h3>
+            <p class="text-[#9f9f9f] text-sm mt-1">(au lieu de 189 € · -63 %)</p>
+            <ul class="mt-5 space-y-2 text-sm text-[#d1d1d1]">
+              <li>• 3 vidéos UGC 20-30 s, 3 angles différents (problème/solution, démo, témoignage)</li>
+              <li>• 3 hooks + 3 CTAs distincts pour A/B test</li>
+              <li>• Brief stratégique offert (visio 30 min)</li>
+              <li>• Droits Meta Ads + TikTok Ads inclus 6 mois</li>
+              <li>• Livré sous 48 h · 2 révisions offertes</li>
+              <li>• 🎯 Idéal pour : lancer ou rebooster une campagne pub</li>
+            </ul>
+            <a href="#contact" class="mt-6 inline-flex bg-[#00FF88] text-[#0D0D0D] font-bold px-5 py-3 rounded-full">Commander à 69 € →</a>
+          </article>
+
+          <article class="card rounded-2xl p-7">
+            <h3 class="text-xl font-bold">Option TV Spot Look — +20 €</h3>
+            <p class="text-[#9f9f9f] text-sm mt-1">(checkbox sur toute offre vidéo)</p>
+            <ul class="mt-5 space-y-2 text-sm text-[#d1d1d1]">
+              <li>• Color grading cinématique</li>
+              <li>• Effets avancés + sound design pro</li>
+              <li>• Export 16:9 supplémentaire pour pre-rolls YouTube et bannières</li>
+              <li>• 🎯 Idéal pour : marques premium / DNVB qui veulent un rendu haut de gamme</li>
+            </ul>
+          </article>
+        </div>
+
+        <p class="font-mono text-[#777] text-xs tracking-[0.25em] uppercase mt-12 mb-4">— Offres Design</p>
+        <div class="grid lg:grid-cols-3 gap-6">
+          <article class="card rounded-2xl p-7">
+            <h3 class="text-xl font-bold">Pack Visuels — 49 €</h3>
+            <p class="mt-3 text-[#d1d1d1] text-sm">2 supports (post IG, story, flyer ou bannière) + sources livrées en 48 h.</p>
+            <a href="#contact" class="mt-6 inline-flex border border-[#00FF88] text-[#00FF88] font-semibold px-5 py-3 rounded-full">Commander à 49 € →</a>
+          </article>
+          <article class="card rounded-2xl p-7">
+            <h3 class="text-xl font-bold">Pack Design — 99 €</h3>
+            <p class="mt-3 text-[#d1d1d1] text-sm">5 supports + mini-identité (palette, typo) en 72 h.</p>
+            <a href="#contact" class="mt-6 inline-flex border border-[#00FF88] text-[#00FF88] font-semibold px-5 py-3 rounded-full">Commander à 99 € →</a>
+          </article>
+          <article class="card rounded-2xl p-7">
+            <h3 class="text-xl font-bold">Brand Kit Complet — 149 €</h3>
+            <p class="mt-3 text-[#d1d1d1] text-sm">Logo + palette + typos + 5 supports + charte PDF en 5 jours.</p>
+            <a href="#contact" class="mt-6 inline-flex border border-[#00FF88] text-[#00FF88] font-semibold px-5 py-3 rounded-full">Commander à 149 € →</a>
+          </article>
+        </div>
+
+        <article class="mt-10 card border-2 border-[#00FF88] rounded-2xl p-8">
+          <h3 class="text-2xl font-black">💎 COMBO FULL VIBE — 179 € <span class="text-[#9f9f9f] text-base font-medium">(au lieu de 218 € · -18 %)</span></h3>
+          <ul class="mt-5 space-y-2 text-[#d1d1d1]">
+            <li>• Tout le Pack Trio + tout le Brand Kit Complet</li>
+            <li>• Livraison prioritaire 48 h</li>
+            <li>• Appel stratégique 45 min</li>
+            <li>• Garantie satisfait ou remboursé 7 jours</li>
+          </ul>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#contact" class="cta-main inline-flex bg-[#00FF88] text-[#0D0D0D] font-bold px-6 py-3 rounded-full">Démarrer le projet →</a>
+            <a href="https://calendly.com/vibe-ads-studio/appel-decouverte-15min" target="_blank" rel="noreferrer" class="inline-flex border border-[#00FF88] text-[#00FF88] font-semibold px-6 py-3 rounded-full">📅 Réserver un appel 15 min</a>
+          </div>
+        </article>
+      </section>
+
+      <section id="process" class="max-w-7xl mx-auto px-5 md:px-8 py-14 border-t border-[#1a1a1a]">
+        <h2 class="section-title text-3xl md:text-4xl font-black mb-8">Comment ça marche</h2>
+        <div class="grid md:grid-cols-2 gap-5 text-[#d3d3d3]">
+          <article class="card rounded-xl p-6"><h3 class="font-bold text-white mb-2">1. 📝 Brief ultra-rapide (10 min)</h3><p>Tu remplis un formulaire de 8 questions ou on prend 15 min en visio. Je cadre ton produit, ta cible, ton angle, tes concurrents et le résultat attendu.</p></article>
+          <article class="card rounded-xl p-6"><h3 class="font-bold text-white mb-2">2. 🎬 Production IA + humaine (24-48 h)</h3><p>J'écris le script (3 hooks, 1 corps, 1 CTA), je produis avec Higgsfield Marketing + Seedance 2.0, je monte et color grade dans CapCut/Premiere. Tu reçois un lien privé.</p></article>
+          <article class="card rounded-xl p-6"><h3 class="font-bold text-white mb-2">3. 👀 Validation & révision (24 h)</h3><p>Tu regardes, tu commentes timestamp par timestamp. 1 à 2 allers-retours inclus selon ton offre. Pas de blabla, pas de surcouche d'agence.</p></article>
+          <article class="card rounded-xl p-6"><h3 class="font-bold text-white mb-2">4. 🚀 Livraison Ads-ready</h3><p>Tu reçois les MP4 finaux + les rushs (sur demande) + un mini-guide d'upload Meta/TikTok Ads. Droits inclus. Tu lances ta campagne dans la foulée.</p></article>
+        </div>
+      </section>
+
+      <section id="faq" class="max-w-7xl mx-auto px-5 md:px-8 py-14 border-t border-[#1a1a1a]">
+        <h2 class="section-title text-3xl md:text-4xl font-black mb-8">Questions fréquentes</h2>
+        <div class="space-y-3">
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">1. C'est quoi une vidéo UGC, concrètement ?</summary><p class="mt-3 text-[#cfcfcf]">Un format court (15-60 s) au style authentique, qui ressemble à un post utilisateur mais qui est scripté pour convertir. C'est aujourd'hui le format publicitaire le plus performant sur Meta Ads et TikTok Ads : x4 le CTR et /2 le CPC vs pub classique (étude marché UGC France 2026).</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">2. Pourquoi tes prix sont-ils si bas ?</summary><p class="mt-3 text-[#cfcfcf]">Vibe Ads Studio se lance. Les 10 premiers clients bénéficient de tarifs -60 à -70 % en échange du droit d'utiliser leurs vidéos dans mon portfolio (anonymisable). Les prix s'aligneront ensuite sur le marché (100-300 €/vidéo). C'est un win-win, pas une arnaque.</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">3. Tu utilises de l'IA ? J'ai pas envie d'un truc qui sent le robot.</summary><p class="mt-3 text-[#cfcfcf]">Oui, en transparence : Higgsfield Marketing, Seedance 2.0 et GPT Image 2.0 pour la production. Mais le scripting, la stratégie d'angle, le brief et le montage final sont 100 % humains. Résultat : qualité indistinguable d'une vidéo "réelle" mais livrée 10× plus vite.</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">4. J'ai les droits pour diffuser en pub payante ?</summary><p class="mt-3 text-[#cfcfcf]">✅ Pack Trio + Combo : Droits Meta Ads + TikTok Ads inclus 6 mois. ✅ Essai Solo : Droits organiques 3 mois (Meta/TikTok Ads en option +15 €). Extension à 12 mois ou usage illimité : sur devis.</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">5. Je dois fournir le produit ?</summary><p class="mt-3 text-[#cfcfcf]">Pour les vidéos UGC IA, non. Je pars de tes visuels packshot, de ton site e-commerce ou de tes photos produit. Pour des formats avec acteurs réels, c'est un autre service (sur devis, à partir de 350 €).</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">6. En combien de temps je reçois mes vidéos ?</summary><p class="mt-3 text-[#cfcfcf]">Essai Solo : 72 h ouvrées. Pack Trio : 48 h ouvrées. Combo Full Vibe : 48 h prioritaires. Week-ends et jours fériés exclus. Délai garanti contractuellement.</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">7. Et si je ne suis pas satisfait ?</summary><p class="mt-3 text-[#cfcfcf]">Chaque offre inclut 1 à 2 révisions gratuites. Si après la 2e version la vidéo ne correspond toujours pas au brief, je te rembourse intégralement. Zéro risque pour toi.</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">8. Comment je paie ? Tu fais des factures ?</summary><p class="mt-3 text-[#cfcfcf]">Paiement en ligne sécurisé via Stripe (CB, Apple Pay, Google Pay) au moment de la commande. Facture FR conforme envoyée automatiquement (TVA non applicable, art. 293 B CGI). Possibilité d'acompte 50 % pour les Combo.</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">9. Tu fais aussi pour mon secteur ?</summary><p class="mt-3 text-[#cfcfcf]">Je travaille avec : DNVB, e-commerçants, restaurateurs, coachs, SaaS, boutiques locales, créateurs de contenu, infopreneurs. Si tu vends quelque chose en ligne ou en local et que tu veux booster ta visibilité, c'est ok. Pour les secteurs réglementés (santé, finance, alcool fort) → on cadre ensemble pour respecter les règles Meta/TikTok.</p></details>
+          <details class="card rounded-xl p-5"><summary class="cursor-pointer font-semibold">10. Comment je sais si ça va marcher pour moi ?</summary><p class="mt-3 text-[#cfcfcf]">Réserve un appel découverte 15 min gratuit : je regarde ton produit, ton site, ta concurrence, et je te dis franchement si l'UGC est adapté. Si oui, on décide ensemble du bon pack. Si non, je te dis pourquoi et je t'oriente. Pas de pitch commercial agressif.</p></details>
+        </div>
+      </section>
+
+      <section id="contact" class="max-w-7xl mx-auto px-5 md:px-8 py-14 border-t border-[#1a1a1a]">
+        <h2 class="section-title text-3xl md:text-4xl font-black">Parlons de votre prochaine campagne</h2>
+        <p class="text-[#9f9f9f] mt-3">Réponse garantie en moins de 12 h (jours ouvrés). Devis gratuit, sans engagement.</p>
+
+        <div class="grid lg:grid-cols-2 gap-6 mt-8">
+          <form id="briefForm" class="card rounded-2xl p-6 space-y-4">
+            <h3 class="font-bold text-lg">📩 Formulaire de brief (2 min)</h3>
+            <div>
+              <label class="block text-sm text-[#b9b9b9] mb-1" for="name">Nom</label>
+              <input id="name" name="name" required class="w-full bg-[#0c0c0c] border border-[#2a2a2a] rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label class="block text-sm text-[#b9b9b9] mb-1" for="email">Email</label>
+              <input id="email" name="email" type="email" required class="w-full bg-[#0c0c0c] border border-[#2a2a2a] rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label class="block text-sm text-[#b9b9b9] mb-1" for="offer">Offre souhaitée</label>
+              <select id="offer" name="offer" class="w-full bg-[#0c0c0c] border border-[#2a2a2a] rounded-lg px-3 py-2">
+                <option>Essai Solo — 29 €</option>
+                <option>Pack Trio — 69 €</option>
+                <option>Option TV Spot Look — +20 €</option>
+                <option>Pack Visuels — 49 €</option>
+                <option>Pack Design — 99 €</option>
+                <option>Brand Kit Complet — 149 €</option>
+                <option>Combo Full Vibe — 179 €</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm text-[#b9b9b9] mb-1" for="message">Brief</label>
+              <textarea id="message" name="message" required rows="4" class="w-full bg-[#0c0c0c] border border-[#2a2a2a] rounded-lg px-3 py-2" placeholder="Produit, cible, angle, objectif..."></textarea>
+            </div>
+            <button type="submit" class="w-full cta-main bg-[#00FF88] text-[#0D0D0D] font-bold py-3 rounded-lg">Recevoir mon devis en 12 h</button>
+            <p id="formStatus" class="text-sm text-[#9f9f9f]">Les infos sont enregistrées dans votre navigateur (mode local) en attendant le branchement Tally/Formspree.</p>
+          </form>
+
+          <div class="card rounded-2xl p-6 space-y-5">
+            <h3 class="font-bold text-lg">📅 Réserver un appel 15 min</h3>
+            <p class="text-[#cfcfcf]">Appel découverte gratuit pour cadrer votre offre, vos angles créa et le meilleur pack selon votre budget.</p>
+            <a href="https://calendly.com/vibe-ads-studio/appel-decouverte-15min" target="_blank" rel="noreferrer" class="inline-flex bg-[#00FF88] text-[#0D0D0D] font-bold px-5 py-3 rounded-full">Réserver un appel 15 min</a>
+            <div class="pt-4 border-t border-[#232323] text-sm text-[#bcbcbc]">
+              <p>Vibe Ads Studio — Auto-entreprise enregistrée au SIREN À compléter · Basé en France</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-[#1a1a1a]">
+      <div class="max-w-7xl mx-auto px-5 md:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-[#9a9a9a]">
+        <p>© 2026 Vibe Ads Studio — Auto-entreprise (informations légales à compléter)</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="mentions-legales.html" class="hover:text-[#00FF88]">Mentions légales</a>
+          <a href="cgv.html" class="hover:text-[#00FF88]">CGV</a>
+          <a href="politique-confidentialite.html" class="hover:text-[#00FF88]">Politique de confidentialité</a>
+          <a href="https://calendly.com/vibe-ads-studio/appel-decouverte-15min" target="_blank" rel="noreferrer" class="hover:text-[#00FF88]">Réserver un appel 15 min</a>
+        </div>
+      </div>
+    </footer>
+
+    <a href="#pricing" class="md:hidden fixed bottom-4 left-4 right-4 cta-main bg-[#00FF88] text-[#0D0D0D] text-center font-black py-3 rounded-full z-30">29 € · Tester l'UGC</a>
+
+    <div id="cookieBanner" class="hidden fixed bottom-0 left-0 right-0 z-50 bg-[#111] border-t border-[#2b2b2b] p-4">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <p class="text-sm text-[#d4d4d4]">Ce site utilise des cookies de mesure d'audience pour améliorer l'expérience utilisateur.</p>
+        <div class="flex gap-2">
+          <button id="cookieReject" class="px-4 py-2 text-sm border border-[#2f2f2f] rounded-lg">Refuser</button>
+          <button id="cookieAccept" class="px-4 py-2 text-sm bg-[#00FF88] text-[#0D0D0D] font-bold rounded-lg">Accepter</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function fileExists(path) {
+        try {
+          const res = await fetch(path, { method: "HEAD", cache: "no-store" });
+          return res.ok;
+        } catch {
+          return false;
+        }
       }
-      function up() { track.style.transform = `translateX(-${(100/view)*cur}%)`; [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===cur)); pB.disabled=cur===0; nB.disabled=cur>=(videos.length-view); pB.classList.toggle("opacity-40",pB.disabled); nB.classList.toggle("opacity-40",nB.disabled); }
-      nB.onclick = () => { if(cur<videos.length-view){cur++;up();} }; pB.onclick = () => { if(cur>0){cur--;up();} };
-      window.onresize = () => { let nv = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1; if(nv!==view){view=nv;cur=0;draw();up();} };
-      draw(); up(); lucide.createIcons();
+
+      async function detectPortfolioVideos() {
+        const found = [];
+        let misses = 0;
+
+        for (let i = 1; i <= 50 && misses < 5; i += 1) {
+          const src = `videos/video${i}.mp4`;
+          if (await fileExists(src)) {
+            found.push({ src, title: `Vidéo ${i}`, format: "9:16" });
+            misses = 0;
+          } else {
+            misses += 1;
+          }
+        }
+
+        return found;
+      }
+
+      async function renderPortfolio() {
+        const grid = document.getElementById("portfolioGrid");
+        const empty = document.getElementById("portfolioEmpty");
+        const videos = await detectPortfolioVideos();
+
+        if (!videos.length) {
+          empty.classList.remove("hidden");
+          return;
+        }
+
+        grid.innerHTML = videos
+          .map(
+            (video) => `
+              <article class="video-card card rounded-xl overflow-hidden">
+                <div class="relative">
+                  <video class="w-full aspect-[9/16] object-cover bg-black" src="${video.src}" controls muted playsinline preload="metadata"></video>
+                  <div class="video-overlay absolute inset-0 p-4 flex items-end">
+                    <div>
+                      <p class="font-bold">${video.title}</p>
+                      <p class="text-xs text-[#d7d7d7]">📐 Format : ${video.format} · ✅ Spec work pédagogique</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            `,
+          )
+          .join("");
+      }
+
+      document.getElementById("briefForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const form = new FormData(event.target);
+        const payload = Object.fromEntries(form.entries());
+        const existing = JSON.parse(localStorage.getItem("vibeBriefSubmissions") || "[]");
+        existing.push({ ...payload, sentAt: new Date().toISOString() });
+        localStorage.setItem("vibeBriefSubmissions", JSON.stringify(existing));
+        document.getElementById("formStatus").textContent = "Merci ! Votre brief est bien enregistré. Étape suivante : brancher ce formulaire à Tally/Formspree pour recevoir les demandes par email.";
+        event.target.reset();
+      });
+
+      const cookieKey = "vibe_cookie_choice";
+      const banner = document.getElementById("cookieBanner");
+      if (!localStorage.getItem(cookieKey)) banner.classList.remove("hidden");
+      document.getElementById("cookieAccept").onclick = () => {
+        localStorage.setItem(cookieKey, "accepted");
+        banner.classList.add("hidden");
+      };
+      document.getElementById("cookieReject").onclick = () => {
+        localStorage.setItem(cookieKey, "rejected");
+        banner.classList.add("hidden");
+      };
+
+      renderPortfolio();
+      lucide.createIcons();
     </script>
   </body>
 </html>
