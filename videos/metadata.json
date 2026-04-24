@@ -1,0 +1,24 @@
+{
+  "__instructions": {
+    "note": "Modifiez uniquement les valeurs de title et description. Ne changez pas les clés video1, video2, etc. Gardez les guillemets, virgules et accolades.",
+    "where": "Ce fichier est lu automatiquement par le portfolio pour personnaliser les textes.",
+    "fallback": "Si une vidéo n'a pas d'entrée ici, le site affiche automatiquement 'Vidéo #X'.",
+    "example": "Pour personnaliser video5.mp4, ajoutez une clé video5 avec title et description."
+  },
+  "video1": {
+    "title": "Routine glow — Sérum Vitamine C (Cosmétique)",
+    "description": "UGC avant/après en 15 secondes pour mettre en avant l'éclat du teint et la texture légère du sérum."
+  },
+  "video2": {
+    "title": "Burger Signature en 3 étapes (Food)",
+    "description": "Plan cuisine + dressage final pour booster les commandes via une accroche visuelle très appétissante."
+  },
+  "video3": {
+    "title": "Automatiser ses relances clients (SaaS)",
+    "description": "Démo produit orientée conversion : problème, solution, preuve sociale, puis CTA d'essai gratuit."
+  },
+  "video4": {
+    "title": "Programme HIIT 20 min à la maison (Fitness)",
+    "description": "Format dynamique avec bénéfices immédiats, progression simple et appel à rejoindre le coaching."
+  }
+}

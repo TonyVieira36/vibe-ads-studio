@@ -60,6 +60,20 @@
         background: rgba(0, 0, 0, 0.65);
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
+      .video-meta-title {
+        font-weight: 700;
+        font-size: 1rem;
+        line-height: 1.35;
+      }
+      .video-meta-description {
+        margin-top: 0.35rem;
+        font-size: 0.82rem;
+        color: #cfcfcf;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
     </style>
   </head>
   <body class="h-full bg-[#0D0D0D] text-white font-heading">
@@ -328,6 +342,7 @@
     <script>
       const PORTFOLIO_VIDEO_EXTENSIONS = ["mp4", "MP4", "webm", "WEBM", "mov", "MOV"];
       const PORTFOLIO_SCAN_LIMIT = 60;
+      const PORTFOLIO_METADATA_PATH = "videos/metadata.json";
 
       /**
        * Vérifie qu'un fichier est accessible.
@@ -353,12 +368,85 @@
         }
       }
 
+      function escapeHtml(value) {
+        const unsafe = String(value ?? "");
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
       function getVideoMimeType(extension) {
         const normalizedExtension = extension.toLowerCase();
         if (normalizedExtension === "mp4") return "video/mp4";
         if (normalizedExtension === "webm") return "video/webm";
         if (normalizedExtension === "mov") return "video/quicktime";
         return "video/mp4";
+      }
+
+      function normalizeMetadataEntry(entry) {
+        if (!entry || typeof entry !== "object") return null;
+
+        const title = typeof entry.title === "string" ? entry.title.trim() : "";
+        const description = typeof entry.description === "string" ? entry.description.trim() : "";
+
+        if (!title && !description) return null;
+
+        return { title, description };
+      }
+
+      async function loadPortfolioMetadata() {
+        try {
+          const response = await fetch(PORTFOLIO_METADATA_PATH, { cache: "no-store" });
+
+          if (!response.ok) {
+            return {
+              metadataByKey: {},
+              warning: "ℹ️ metadata.json introuvable. Le portfolio utilise les titres par défaut (Vidéo #X).",
+            };
+          }
+
+          const rawText = await response.text();
+          if (!rawText.trim()) {
+            return {
+              metadataByKey: {},
+              warning: "⚠️ metadata.json est vide. Les titres par défaut sont utilisés.",
+            };
+          }
+
+          let parsed;
+          try {
+            parsed = JSON.parse(rawText);
+          } catch {
+            return {
+              metadataByKey: {},
+              warning: "⚠️ metadata.json est mal formaté (JSON invalide). Vérifiez la syntaxe (guillemets, virgules, accolades).",
+            };
+          }
+
+          if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+            return {
+              metadataByKey: {},
+              warning: "⚠️ metadata.json doit contenir un objet JSON (pas une liste).",
+            };
+          }
+
+          const metadataByKey = {};
+          Object.keys(parsed).forEach((key) => {
+            if (key === "__instructions") return;
+            const normalized = normalizeMetadataEntry(parsed[key]);
+            if (normalized) metadataByKey[key] = normalized;
+          });
+
+          return { metadataByKey, warning: "" };
+        } catch {
+          return {
+            metadataByKey: {},
+            warning: "⚠️ Impossible de charger metadata.json. Les titres par défaut sont affichés.",
+          };
+        }
       }
 
       async function detectPortfolioVideos() {
@@ -371,9 +459,10 @@
             const src = `videos/video${i}.${extension}`;
             if (await fileExists(src)) {
               found.push({
+                index: i,
+                key: `video${i}`,
                 src,
-                title: `Vidéo ${i}`,
-                format: "9:16",
+                defaultTitle: `Vidéo #${i}`,
                 extension: extension.toLowerCase(),
                 mimeType: getVideoMimeType(extension),
               });
@@ -431,8 +520,13 @@
         grid.innerHTML = "";
 
         try {
-          const videos = await detectPortfolioVideos();
+          const [videos, metadataPayload] = await Promise.all([detectPortfolioVideos(), loadPortfolioMetadata()]);
           loading.classList.add("hidden");
+
+          if (metadataPayload.warning) {
+            error.classList.remove("hidden");
+            error.textContent = metadataPayload.warning;
+          }
 
           if (!videos.length) {
             empty.classList.remove("hidden");
@@ -440,32 +534,37 @@
           }
 
           grid.innerHTML = videos
-            .map(
-              (video) => `
-              <article class="video-card card rounded-xl overflow-hidden">
-                <div class="relative">
-                  <span class="video-loading-badge" data-video-loading>⏳ Chargement...</span>
-                  <video
-                    class="video-player"
-                    controls
-                    playsinline
-                    preload="metadata"
-                    data-video-player
-                  >
-                    <source src="${video.src}" type="${video.mimeType}" />
-                    Votre navigateur ne supporte pas la lecture HTML5 de cette vidéo.
-                  </video>
-                  <div class="video-overlay absolute inset-0 p-4 flex items-end">
-                    <div>
-                      <p class="font-bold">${video.title}</p>
-                      <p class="text-xs text-[#d7d7d7]">📐 Format : ${video.format} · 🎬 ${video.extension.toUpperCase()}</p>
-                    </div>
+            .map((video) => {
+              const customMeta = metadataPayload.metadataByKey[video.key];
+              const finalTitle = customMeta?.title || video.defaultTitle;
+              const finalDescription =
+                customMeta?.description ||
+                `Ajoutez une description personnalisée pour ${video.key} dans /videos/metadata.json.`;
+
+              return `
+                <article class="video-card card rounded-xl overflow-hidden flex flex-col">
+                  <div class="relative">
+                    <span class="video-loading-badge" data-video-loading>⏳ Chargement...</span>
+                    <video
+                      class="video-player"
+                      controls
+                      playsinline
+                      preload="metadata"
+                      data-video-player
+                    >
+                      <source src="${escapeHtml(video.src)}" type="${escapeHtml(video.mimeType)}" />
+                      Votre navigateur ne supporte pas la lecture HTML5 de cette vidéo.
+                    </video>
+                    <div class="video-overlay absolute inset-0"></div>
                   </div>
-                </div>
-                <p data-video-error class="hidden text-xs text-[#ffb4b4] px-4 py-3 border-t border-[#2a2a2a]"></p>
-              </article>
-            `,
-            )
+                  <div class="px-4 pt-4 pb-3 border-t border-[#232323]">
+                    <p class="video-meta-title">${escapeHtml(finalTitle)}</p>
+                    <p class="video-meta-description">${escapeHtml(finalDescription)}</p>
+                  </div>
+                  <p data-video-error class="hidden text-xs text-[#ffb4b4] px-4 py-3 border-t border-[#2a2a2a]"></p>
+                </article>
+              `;
+            })
             .join("");
 
           attachPortfolioVideoEvents();
