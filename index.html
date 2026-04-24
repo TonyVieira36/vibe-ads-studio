@@ -37,10 +37,29 @@
       .best-seller { box-shadow: 0 0 40px rgba(0, 255, 136, 0.16); }
       .video-overlay {
         opacity: 0;
+        pointer-events: none; /* N'intercepte jamais les clics (sinon les contrôles vidéo deviennent inutilisables) */
         transition: opacity 0.25s ease;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.82) 70%);
       }
       .video-card:hover .video-overlay { opacity: 1; }
+      .video-player {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        object-fit: cover;
+        background: #000;
+      }
+      .video-loading-badge {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 5;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: 9999px;
+        background: rgba(0, 0, 0, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
     </style>
   </head>
   <body class="h-full bg-[#0D0D0D] text-white font-heading">
@@ -118,10 +137,15 @@
       <section id="portfolio" class="max-w-7xl mx-auto px-5 md:px-8 py-14 border-t border-[#1a1a1a]">
         <p class="font-mono text-[#00FF88] text-xs tracking-[0.28em] uppercase mb-2">Réalisations</p>
         <h2 class="section-title text-3xl md:text-4xl font-black">Portfolio vidéo (détection automatique)</h2>
-  
+        <p class="text-[#9b9b9b] mt-3 max-w-3xl">Déposez simplement vos fichiers nommés <code>video1.mp4</code>, <code>video2.mp4</code>, <code>video3.mp4</code>… dans le dossier <code>/videos/</code>. Le site détecte et affiche automatiquement les vidéos disponibles.</p>
+
+        <div id="portfolioLoading" class="mt-8 card rounded-xl p-6 text-[#cfcfcf]">
+          ⏳ Analyse des fichiers vidéo en cours...
+        </div>
         <div id="portfolioGrid" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        <div id="portfolioError" class="mt-8 card rounded-xl p-6 text-[#ffb4b4] border border-[#7a2e2e] hidden"></div>
         <div id="portfolioEmpty" class="mt-8 card rounded-xl p-6 text-[#bdbdbd] hidden">
-    
+          Aucune vidéo détectée pour le moment. Ajoutez vos fichiers dans le dossier <code>/videos/</code> avec des noms <code>video1.mp4</code>, <code>video2.mp4</code>, etc. (voir <code>/videos/README.md</code>).
         </div>
       </section>
 
@@ -302,59 +326,155 @@
     </div>
 
     <script>
+      const PORTFOLIO_VIDEO_EXTENSIONS = ["mp4", "MP4", "webm", "WEBM", "mov", "MOV"];
+      const PORTFOLIO_SCAN_LIMIT = 60;
+
+      /**
+       * Vérifie qu'un fichier est accessible.
+       * Fallback GET (Range) si HEAD est refusé par certains serveurs statiques.
+       */
       async function fileExists(path) {
         try {
-          const res = await fetch(path, { method: "HEAD", cache: "no-store" });
-          return res.ok;
+          const headResponse = await fetch(path, { method: "HEAD", cache: "no-store" });
+          if (headResponse.ok) return true;
+
+          if ([403, 405].includes(headResponse.status)) {
+            const rangeResponse = await fetch(path, {
+              method: "GET",
+              cache: "no-store",
+              headers: { Range: "bytes=0-1" },
+            });
+            return rangeResponse.ok;
+          }
+
+          return false;
         } catch {
           return false;
         }
       }
 
+      function getVideoMimeType(extension) {
+        const normalizedExtension = extension.toLowerCase();
+        if (normalizedExtension === "mp4") return "video/mp4";
+        if (normalizedExtension === "webm") return "video/webm";
+        if (normalizedExtension === "mov") return "video/quicktime";
+        return "video/mp4";
+      }
+
       async function detectPortfolioVideos() {
         const found = [];
-        let misses = 0;
 
-        for (let i = 1; i <= 50 && misses < 5; i += 1) {
-          const src = `videos/video${i}.mp4`;
-          if (await fileExists(src)) {
-            found.push({ src, title: `Vidéo ${i}`, format: "9:16" });
-            misses = 0;
-          } else {
-            misses += 1;
+        // Important: on ne coupe plus après quelques "misses".
+        // Sinon des vidéos non contiguës (ex: video7.mp4 sans video1.mp4) ne sont jamais détectées.
+        for (let i = 1; i <= PORTFOLIO_SCAN_LIMIT; i += 1) {
+          for (const extension of PORTFOLIO_VIDEO_EXTENSIONS) {
+            const src = `videos/video${i}.${extension}`;
+            if (await fileExists(src)) {
+              found.push({
+                src,
+                title: `Vidéo ${i}`,
+                format: "9:16",
+                extension: extension.toLowerCase(),
+                mimeType: getVideoMimeType(extension),
+              });
+              break;
+            }
           }
         }
 
         return found;
       }
 
+      function attachPortfolioVideoEvents() {
+        document.querySelectorAll("[data-video-player]").forEach((videoElement) => {
+          const badge = videoElement.parentElement.querySelector("[data-video-loading]");
+          const errorBox = videoElement.closest("article")?.querySelector("[data-video-error]");
+
+          videoElement.addEventListener("waiting", () => {
+            if (badge) {
+              badge.textContent = "⏳ Chargement...";
+              badge.classList.remove("hidden");
+            }
+          });
+
+          videoElement.addEventListener("playing", () => {
+            if (badge) badge.classList.add("hidden");
+          });
+
+          videoElement.addEventListener("loadedmetadata", () => {
+            if (badge) badge.classList.add("hidden");
+          });
+
+          videoElement.addEventListener("loadeddata", () => {
+            if (badge) badge.classList.add("hidden");
+          });
+
+          videoElement.addEventListener("error", () => {
+            if (badge) badge.classList.add("hidden");
+            if (errorBox) {
+              errorBox.classList.remove("hidden");
+              errorBox.textContent = "Impossible de lire cette vidéo (fichier manquant/corrompu ou format non supporté).";
+            }
+          });
+        });
+      }
+
       async function renderPortfolio() {
         const grid = document.getElementById("portfolioGrid");
         const empty = document.getElementById("portfolioEmpty");
-        const videos = await detectPortfolioVideos();
+        const loading = document.getElementById("portfolioLoading");
+        const error = document.getElementById("portfolioError");
 
-        if (!videos.length) {
-          empty.classList.remove("hidden");
-          return;
-        }
+        loading.classList.remove("hidden");
+        empty.classList.add("hidden");
+        error.classList.add("hidden");
+        grid.innerHTML = "";
 
-        grid.innerHTML = videos
-          .map(
-            (video) => `
+        try {
+          const videos = await detectPortfolioVideos();
+          loading.classList.add("hidden");
+
+          if (!videos.length) {
+            empty.classList.remove("hidden");
+            return;
+          }
+
+          grid.innerHTML = videos
+            .map(
+              (video) => `
               <article class="video-card card rounded-xl overflow-hidden">
                 <div class="relative">
-                  <video class="w-full aspect-[9/16] object-cover bg-black" src="${video.src}" controls muted playsinline preload="metadata"></video>
+                  <span class="video-loading-badge" data-video-loading>⏳ Chargement...</span>
+                  <video
+                    class="video-player"
+                    controls
+                    playsinline
+                    preload="metadata"
+                    data-video-player
+                  >
+                    <source src="${video.src}" type="${video.mimeType}" />
+                    Votre navigateur ne supporte pas la lecture HTML5 de cette vidéo.
+                  </video>
                   <div class="video-overlay absolute inset-0 p-4 flex items-end">
                     <div>
                       <p class="font-bold">${video.title}</p>
-                      <p class="text-xs text-[#d7d7d7]">📐 Format : ${video.format} · ✅ Spec work pédagogique</p>
+                      <p class="text-xs text-[#d7d7d7]">📐 Format : ${video.format} · 🎬 ${video.extension.toUpperCase()}</p>
                     </div>
                   </div>
                 </div>
+                <p data-video-error class="hidden text-xs text-[#ffb4b4] px-4 py-3 border-t border-[#2a2a2a]"></p>
               </article>
             `,
-          )
-          .join("");
+            )
+            .join("");
+
+          attachPortfolioVideoEvents();
+        } catch (portfolioError) {
+          loading.classList.add("hidden");
+          error.classList.remove("hidden");
+          error.textContent = `Erreur lors de la détection des vidéos: ${portfolioError.message}`;
+          console.error("Erreur portfolio:", portfolioError);
+        }
       }
 
       document.getElementById("briefForm").addEventListener("submit", (event) => {
