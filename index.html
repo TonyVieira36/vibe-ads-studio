@@ -146,7 +146,21 @@
         <a href="#contact" class="cta-main inline-flex items-center gap-2 bg-[#00FF88] text-[#0D0D0D] text-sm font-bold px-4 py-2 rounded-full hover:scale-[1.02] transition-transform">
           Demander un devis
         </a>
+        <button id="burgerBtn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-[#1a1a1a] transition-colors" aria-label="Menu">
+          <span class="burger-line block w-5 h-0.5 bg-white transition-all duration-300"></span>
+          <span class="burger-line block w-5 h-0.5 bg-white transition-all duration-300"></span>
+          <span class="burger-line block w-5 h-0.5 bg-white transition-all duration-300"></span>
+        </button>
       </nav>
+
+      <!-- Mobile menu overlay -->
+      <div id="mobileMenu" class="md:hidden hidden flex-col border-t border-[#1a1a1a] bg-[#0D0D0D] px-5 py-4 gap-1">
+        <a href="#portfolio" class="mobile-link py-3 text-[#a9a9a9] hover:text-[#00FF88] font-medium border-b border-[#1a1a1a]">Portfolio</a>
+        <a href="#pricing"   class="mobile-link py-3 text-[#a9a9a9] hover:text-[#00FF88] font-medium border-b border-[#1a1a1a]">Tarifs</a>
+        <a href="#process"   class="mobile-link py-3 text-[#a9a9a9] hover:text-[#00FF88] font-medium border-b border-[#1a1a1a]">Process</a>
+        <a href="#faq"       class="mobile-link py-3 text-[#a9a9a9] hover:text-[#00FF88] font-medium border-b border-[#1a1a1a]">FAQ</a>
+        <a href="#contact"   class="mobile-link py-3 text-[#a9a9a9] hover:text-[#00FF88] font-medium">Contact</a>
+      </div>
     </header>
 
     <main id="top">
@@ -578,7 +592,30 @@
 
       
 
-      const cookieKey = "vibe_cookie_choice";
+      const burgerBtn = document.getElementById("burgerBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const burgerLines = document.querySelectorAll(".burger-line");
+
+      burgerBtn.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        mobileMenu.classList.toggle("flex");
+        burgerLines[0].style.transform = isOpen ? "" : "translateY(8px) rotate(45deg)";
+        burgerLines[1].style.opacity = isOpen ? "" : "0";
+        burgerLines[2].style.transform = isOpen ? "" : "translateY(-8px) rotate(-45deg)";
+      });
+
+      document.querySelectorAll(".mobile-link").forEach(link => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+          mobileMenu.classList.remove("flex");
+          burgerLines[0].style.transform = "";
+          burgerLines[1].style.opacity = "";
+          burgerLines[2].style.transform = "";
+        });
+      });
+
+       = "vibe_cookie_choice";
       const banner = document.getElementById("cookieBanner");
       if (!localStorage.getItem(cookieKey)) banner.classList.remove("hidden");
       document.getElementById("cookieAccept").onclick = () => { localStorage.setItem(cookieKey, "accepted"); banner.classList.add("hidden"); };
