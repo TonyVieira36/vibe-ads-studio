@@ -358,33 +358,9 @@
         <p class="text-[#9f9f9f] mt-3">Réponse sous 24 h (jours ouvrés). Devis gratuit, sans engagement.</p>
 
         <div class="grid lg:grid-cols-2 gap-6 mt-8">
-          <form id="briefForm" class="card rounded-2xl p-6 space-y-4">
-            <h3 class="font-bold text-lg">📩 Formulaire de brief pour obtenir votre devis (2 min)</h3>
-            <div>
-              <label class="block text-sm text-[#b9b9b9] mb-1" for="name">Nom</label>
-              <input id="name" name="name" required class="w-full bg-[#0c0c0c] border border-[#2a2a2a] rounded-lg px-3 py-2" />
-            </div>
-            <div>
-              <label class="block text-sm text-[#b9b9b9] mb-1" for="email">Email</label>
-              <input id="email" name="email" type="email" required class="w-full bg-[#0c0c0c] border border-[#2a2a2a] rounded-lg px-3 py-2" />
-            </div>
-            <div>
-              <label class="block text-sm text-[#b9b9b9] mb-1" for="offer">Offre souhaitée</label>
-              <select id="offer" name="offer" class="w-full bg-[#0c0c0c] border border-[#2a2a2a] rounded-lg px-3 py-2">
-                <option>Starter — 39 €</option>
-                <option>Pro — 99 €</option>
-                <option>Pro + TV Spot Look — 129 €</option>
-                <option>Studio — 199 €</option>
-                <option>Je ne sais pas encore — conseille-moi</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm text-[#b9b9b9] mb-1" for="message">Brief</label>
-              <textarea id="message" name="message" required rows="4" class="w-full bg-[#0c0c0c] border border-[#2a2a2a] rounded-lg px-3 py-2" placeholder="Produit, cible, angle, objectif..."></textarea>
-            </div>
-            <button type="submit" class="w-full cta-main bg-[#00FF88] text-[#0D0D0D] font-bold py-3 rounded-lg">Recevoir mon devis personnalisé sous 24 h</button>
-            <p id="formStatus" class="text-sm text-[#9f9f9f]">Les infos sont enregistrées dans votre navigateur (mode local) en attendant le branchement Tally/Formspree.</p>
-          </form>
+          <div class="card rounded-2xl overflow-hidden" style="min-height:520px;">
+            <iframe data-tally-src="https://tally.so/embed/ZjPLkA?alignLeft=1&hideTitle=0&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="520" frameborder="0" marginheight="0" marginwidth="0" title="Brief Vibe Ads Studio" style="background:transparent;"></iframe>
+          </div>
 
           <div class="card rounded-2xl p-6 space-y-5">
             <h3 class="font-bold text-lg">✉️ Contact email & devis personnalisé</h3>
@@ -565,16 +541,7 @@
         }
       }
 
-      document.getElementById("briefForm").addEventListener("submit", (event) => {
-        event.preventDefault();
-        const form = new FormData(event.target);
-        const payload = Object.fromEntries(form.entries());
-        const existing = JSON.parse(localStorage.getItem("vibeBriefSubmissions") || "[]");
-        existing.push({ ...payload, sentAt: new Date().toISOString() });
-        localStorage.setItem("vibeBriefSubmissions", JSON.stringify(existing));
-        document.getElementById("formStatus").textContent = "Merci ! Votre brief est bien enregistré. Étape suivante : vous envoyer un devis personnalisé par email avec le lien de paiement Stripe.";
-        event.target.reset();
-      });
+      
 
       const cookieKey = "vibe_cookie_choice";
       const banner = document.getElementById("cookieBanner");
@@ -585,5 +552,6 @@
       renderPortfolio();
       lucide.createIcons();
     </script>
+    <script src="https://tally.so/widgets/embed.js" async></script>
   </body>
 </html>
