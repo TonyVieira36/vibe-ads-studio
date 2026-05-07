@@ -1,0 +1,33 @@
+{
+  "__instructions": {
+    "note": "Modifiez seulement title et description"
+  },
+  "video1": {
+    "title": "VECI — La sneaker qui avance, naturellement",
+    "description": "Macro waterproof, immersion nature et vue éclatée des matériaux. Format 9:16."
+  },
+  "video2": {
+    "title": "Bugak Sand — Spot TV kawaii pour snack asiatique",
+    "description": "Esthétique manga Y2K, casse de tablette et onomatopées japonaises. Format 16:9."
+  },
+  "video3": {
+    "title": "Typology L32 — UGC Sérum Éclat Vitamine C",
+    "description": "Talking-head salle de bain, application pipette et packshot final. Format 9:16."
+  },
+  "video4": {
+    "title": "Boucles fleurs artisanales — UGC bijou lifestyle nature",
+    "description": "Macro champ de marguerites, port sur modèle et packshot carte. Format 9:16."
+  },
+  "video5": {
+    "title": "Froggy Prince — Unboxing figurine collectible kawaii",
+    "description": "Découverte boîte, révélation figurine et cartes collector. Format 9:16."
+  },
+  "video6": {
+    "title": "Dieti Natura Safran — UGC + packshot CGI bien-être",
+    "description": "Avatar bureau souriante puis packshot CGI en environnement naturel. Format 9:16."
+  },
+  "video7": {
+    "title": "Bijou personnalisé gravé — UGC émotion Made in France",
+    "description": "Port sur peau, zoom gravure et carte Made in France en fin de vidéo. Format 9:16."
+  }
+}
