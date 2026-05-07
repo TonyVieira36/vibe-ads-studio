@@ -1,37 +1,10 @@
-
 {
-  "__instructions": {
-    "note": "Modifiez uniquement les valeurs de title et description. Ne changez pas les clés video1, video2, etc. Gardez les guillemets, virgules et accolades.",
-    "where": "Ce fichier est lu automatiquement par le portfolio pour personnaliser les textes.",
-    "fallback": "Si une vidéo n'a pas d'entrée ici, le site affiche automatiquement 'Vidéo #X'.",
-    "example": "Pour personnaliser video5.mp4, ajoutez une clé video5 avec title et description."
-  },
   "video1": {
-    "title": "Tv Spot Chaussure Running",
-    "description": "UGC avant/après en 15 secondes pour mettre en avant l'éclat du teint et la texture légère du sérum."
+    "title": "UGC - Produit Bio",
+    "description": "Démo de l'utilisation du produit dans un environnement naturel."
   },
   "video2": {
-    "title": "Burger Signature en 3 étapes (Food)",
-    "description": "Plan cuisine + dressage final pour booster les commandes via une accroche visuelle très appétissante."
-  },
-  "video3": {
-    "title": "Automatiser ses relances clients (SaaS)",
-    "description": "Démo produit orientée conversion : problème, solution, preuve sociale, puis CTA d'essai gratuit."
-  },
-  "video4": {
-    "title": "Programme HIIT 20 min à la maison (Fitness)",
-    "description": "Format dynamique avec bénéfices immédiats, progression simple et appel à rejoindre le coaching."
-  },
-  "video5": {
-    "title": "FROGGY PRINCE — Unboxing Produit (Format TikTok Ads)",
-    "description": "Vidéo conçue pour capter l’attention dès les premières secondes avec un unboxing visuel satisfaisant. Mise en avant progressive du produit pour créer de la curiosité et maximiser la rétention. Format idéal pour TikTok Ads et produits e-commerce visuels (jouets, collectibles, accessoires)."
-  },
-  "video6": {
-    "title": "Vidéo #6 (Spec work)",
-    "description": "Spec work — format 15s, démonstration produit et CTA."
-  },
-  "video7": {
-    "title": "Vidéo #7 (Spec work)",
-    "description": "Spec work — format 15s, angle témoignage / démo."
+    "title": "Témoignage client",
+    "description": "Retour d’expérience d’un utilisateur satisfait."
   }
 }
