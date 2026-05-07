@@ -614,7 +614,7 @@
         });
       });
 
-       = "vibe_cookie_choice";
+     const cookieKey = "vibe_cookie_choice";
       const banner = document.getElementById("cookieBanner");
       if (!localStorage.getItem(cookieKey)) banner.classList.remove("hidden");
       document.getElementById("cookieAccept").onclick = () => { localStorage.setItem(cookieKey, "accepted"); banner.classList.add("hidden"); };
